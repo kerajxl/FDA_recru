@@ -1,0 +1,9 @@
+name: rekrutacja_financial_data
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pandas
+  - numpy
+  - faker
+  - notebook

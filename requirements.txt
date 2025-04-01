@@ -2,3 +2,4 @@ pandas
 numpy
 Faker
 graphviz
+pandasql

@@ -2,6 +2,7 @@ import pandas as pd
 import random
 from faker import Faker
 from datetime import timedelta
+import sqlite3
 # Inicjalizacja Faker z ustawieniami dla polskich danych
 fake = Faker('pl_PL')
 
@@ -129,3 +130,23 @@ def modify_random_usage(energy_usage_df):
     new_usage = random.randint(100, 3000)
     energy_usage_df.loc[random_index, 'Usage'] = new_usage
     return random_index, random_customer_id, old_usage, new_usage, energy_usage_df.loc[random_index]
+
+
+# query = """ 
+# with calculations as (
+# select 
+# i.InvoiceID, i.POD, i.CustomerID,
+# i.Usage,  date(StartDate) StartDate,  date(EndDate) EndDate, sum(u.Usage) as usage_rel 
+# from invoices i 
+# left join usage u on u.POD = i.POD and date(u.Date) between date(StartDate)  and  date(EndDate) and i.CustomerID = u.CustomerID
+# group by i.InvoiceID, i.POD, i.CustomerID,
+# i.Usage,  date(StartDate) ,  date(EndDate) ) 
+
+# select c.*, cs.*
+#  from 
+#  calculations c
+#  left join customers cs on cs.CustomerID = c.CustomerID 
+#  where usage_rel != Usage
+
+# """
+# sqlquery(query)
